@@ -11,11 +11,9 @@ RUN mvn clean package
 #
 # Package stage
 #
-FROM openjdk:11-jre-slim
+FROM openjdk:11-jre
 
-ENV JAVA_HOME /opt/jdk
-
-ENV PATH ${PATH}:${JAVA_HOME}/bin   
+RUN apt update && apt install -y libxext6 libxtst6 libxi6 libx11-6 libxrender1
 
 COPY --from=build /opt/pogo/org.tango.pogo.pogo_gui/target/Pogo-9.7.3-SNAPSHOT.jar /usr/local/lib/pogo.jar
 ENTRYPOINT ["java","-jar","/usr/local/lib/pogo.jar"]
